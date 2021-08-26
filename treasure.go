@@ -6,38 +6,45 @@ import (
 )
 
 func main() {
-	y5 := "########"
-	y4 := "#......#"
-	y3 := "#.###..#"
-	y2 := "#...#.##"
-	y1 := "#X#....#"
-	y0 := "########"
-	layout := []string{y5, y4, y3, y2, y1, y0}
+	line5 := "########"
+	line4 := "#......#"
+	line3 := "#.###..#"
+	line2 := "#...#.##"
+	line1 := "#X#....#"
+	line0 := "########"
+	lines := []string{line5, line4, line3, line2, line1, line0}
 
-	findTreasure(layout)
+	findTreasure(lines)
 }
 
-func findTreasure(layout []string) {
-	for i := 0; i < len(layout); i++ {
-		y := layout[i]
-		for j := 0; j < len(layout[i]); j++ {
-			symbol := y[j : j+1]
+func findTreasure(lines []string) {
+	for i := 0; i < len(lines); i++ {
+		line := lines[i]
+		for j := 0; j < len(lines[i]); j++ {
+			symbol := line[j : j+1]
 			if symbol == "." {
-				coordinateY := len(layout) - (i + 1)
+				coordinateY := len(lines) - (i + 1)
 				coordinateX := j
 				fmt.Printf("coodinate(%d,%d):\n", coordinateX, coordinateY)
-				newY := replaceAtIndex(y, '$', j)
-				layout[i] = newY
-				printLayout(layout)
-				layout[i] = y
+
+				newLine := replaceAtIndex(line, '$', j)
+
+				//ganti value lines[i] dengan line yang simbol . nya diganti $
+				lines[i] = newLine
+				printLayout(lines)
+
+				//kembalikan lagi value lines[i] ke asal
+				lines[i] = line
 			}
 		}
 	}
 }
-func printLayout(layout []string) {
-	layoutString := strings.Join(layout, "\n")
-	fmt.Println(layoutString)
+func printLayout(lines []string) {
+	layout := strings.Join(lines, "\n")
+	fmt.Println(layout)
 }
+
+//replaceAtIndex digunakan untuk mengganti symbol . dengan $
 func replaceAtIndex(in string, r rune, i int) string {
 	out := []rune(in)
 	out[i] = r
